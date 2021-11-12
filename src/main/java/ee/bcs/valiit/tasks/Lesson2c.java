@@ -4,6 +4,9 @@ public class Lesson2c {
 
     public static void main(String[] args) {
 
+        System.out.println(sequence3n(10, 20));
+        //System.out.println(getSeqLength(11));
+
     }
 
     // TODO
@@ -26,16 +29,47 @@ public class Lesson2c {
     //  kutsuge iga väärtuse korral välja meetodit getSeqLength
     //  salvestage maha kõige suurem ja funktsiooni lõpus tagastage leitud arv
     public static int sequence3n(int x, int y) {
-        return 0;
+        int counter = 1;        // loeb k2esoleva numbri jada pikkust
+        int longestCount = 0;      // salvestab pikima numbri jada pikkuse
+        int longestNum = 0;         // salvestab pikima jadaga numbri
+
+
+        for (int i = x; i <= y; i++) {          // loopib x ja y vahemikku
+
+
+            counter += getSeqLength(x);         // kutsume meetodi mis leiab antud numbri jada pikkuse ja liidab counterile
+
+            if (counter > longestCount) {       // v6rdleb kas k'es oleva nr jada on pikem kui eelmise
+                longestCount = counter;         // kui jah siis asendab
+                longestNum = i;                 // salvestab numbri enda
+
+            }
+
+            counter = 1;            // resetib counteri j'rgmise numbri jaoks
+            x = i + 1;              // resetib x kuna while loopis x muutus 1eks
+        }
+        //System.out.println(longestNum);
+        return longestNum;              // tagastame numbri millel k6ige pikem jada
     }
+
 
     // TODO 2
     //  kutsuge välja meetodit nextElement nii kaua kuni vastus tuleb 1
     //  tagastage korduste arv + 1
     //  x = 1 ->1
     //  x = 2 -> 2
-    public static int getSeqLength(int x){
-        return 0;
+    public static int getSeqLength(int x) {
+        int count = 1;
+        while (x > 1) {
+
+            x = nextElement(x);
+            count++;
+
+        }
+
+        return count;
+
+
     }
 
     // TODO 1
@@ -43,8 +77,17 @@ public class Lesson2c {
     //  x = 1 -> 4
     //  x = 2 -> 1
     //  x = 3 -> 10
-    public static int nextElement(int x){
-        return 0;
+    public static int nextElement(int x) {
+
+        if (x % 2 == 0) {
+            return x / 2;
+
+
+        } else {
+
+            return (x * 3) + 1;
+        }
+
     }
 
 }
