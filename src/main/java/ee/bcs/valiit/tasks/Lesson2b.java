@@ -13,7 +13,7 @@ public class Lesson2b {
 
         //System.out.println(fibonacci(6));
 
-        multiplyTable(3, 3);
+        multiplyTable(5, 5);
 
         //sequence3n(10,20);
 
@@ -25,7 +25,8 @@ public class Lesson2b {
         int[] copy = inputArray.clone();
         int temp;
         for (int i = 0; i < copy.length; i++) {
-            for (int j = i + 1; j < copy.length; j++) {
+            for (int j = i + 1; j < copy.length; j++) {         //array[i   ]= resularray{array.length -1 -i] lihtsam lahendsu
+
                 //
                 if (copy[i] < copy[j]) {
                     temp = copy[i];
@@ -53,7 +54,7 @@ public class Lesson2b {
         int[] newArray = new int[n];
         int j = 0;
         int counter = 0;
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < array.length; i++) {            // resultarray[i]=i+1 *2 lihstam lahendus
             if (array[i] % 2 == 0) {
                 counter++;
                 newArray[j++] = array[i];
@@ -101,8 +102,8 @@ public class Lesson2b {
     public static int sum(int[] x) {
         int sum = 0;
 
-        for (int i = 0; i < x.length; i++) {
-            sum += x[i];
+        for (int i : x) {               //for each tsykkel
+            sum += i;
         }
 
         return sum;
@@ -127,7 +128,7 @@ public class Lesson2b {
         for (int i = 1; i <= x; i++) {
 
             for (int j = 1; j <= y; j++) {
-                System.out.print(i * j + " ");
+                System.out.print(i * j + "\t");   // teeb ilusaks, tab
             }
             System.out.println();
         }
@@ -141,11 +142,23 @@ public class Lesson2b {
     // 0, 1, 1, 2, 3, 5, 8, 13, 21
     // Tagasta fibonacci jada n element. Võid eeldada, et n >= 0
     public static int fibonacci(int n) {
-
+//
         if (n <= 1) {
             return n;
         }
-        return fibonacci(n - 1) + fibonacci(n - 2);
+        return fibonacci(n - 1) + fibonacci(n - 2);         // recursioon , performance kohutav
+
+//        int previous2 = 0;
+//        int previous = 1;
+//        for (int i = 1; i < n;i++) {
+//            int temp = previous + previous2;
+//            previous2 = previous;
+//            previous = temp;
+//        }
+//
+//
+//        return previous;
+
     }
 
     // TODO

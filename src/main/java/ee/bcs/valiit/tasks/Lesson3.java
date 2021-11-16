@@ -55,7 +55,7 @@ public class Lesson3 {
         }
 
         boolean prime = true;
-        for (int i = 2; i <= x / 2; i++) {
+        for (int i = 2; i < x ; i++) {
             if (x % i == 0) {
 
                 prime = false;

@@ -27,7 +27,7 @@ public class Lesson2 {
         int[] Nmassiiv = new int[n];
         for (int i = 0; i < Nmassiiv.length; i++) {
             Nmassiiv[i] = i + 1;
-            System.out.println("index " + i + " v22rtus on  " + Nmassiiv[i]);
+
         }
 
 

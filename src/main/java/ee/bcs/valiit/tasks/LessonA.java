@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class LessonA {
 
     public static void main(String[] args) {
-    int []  massiv= {1,6,3,4,5,6,7,8,9,10};
+        int[] massiv = {1, 6, 3, 4, 5, 6, 7, 8, 9, 10};
         e12(massiv);
 
     }
@@ -64,10 +64,8 @@ public class LessonA {
         return x1 ^ x2;     // XOR meetod
 
 
-
-
     }
-        // tagasta true kui ainult 1 sisend muutujatest on true
+    // tagasta true kui ainult 1 sisend muutujatest on true
 //        if ((x1 && !x2) || (!x1 && x2)) {
 //            return true;
 //        } else {
@@ -110,14 +108,13 @@ public class LessonA {
 
     public static void e12(int x[]) {
         // vaheta massiivi esimene ja teine element omavahel// lahenda nii et ei defineeri muutujat
-//        int temp0 = x[0];
-//        int temp1 = x[1];
-//        x[1] = temp0;
-//        x[0] = temp1;
+        int temp0 = x[0];
+        int temp1 = x[1];
+        x[1] = temp0;
+        x[0] = temp1;
 
 
-
-        System.out.println(Arrays.toString(x));
+        //System.out.println(Arrays.toString(x));
 
 
     }
@@ -126,28 +123,20 @@ public class LessonA {
         // määra massiivi teise elemendi väärtuseks sama mis esimesel elemendil
 //        int temp = x[0];
 //        x[1] = temp;
-        x[1]=x[0];
+        x[1] = x[0];
 
 
     }
 
     public static void e14(int x[]) {
         // määra massiivi teise elemendi väärtuseks sama mis esimesel elemendil
+        x[1] = x[0];
         // määra massiivi neljanda elemendi väärtuseks sama mis kolmandal elemendil
+        x[3] = x[2];
         // määra massiivi kuuenda elemendi väärtuseks sama mis viiendal elemendil
+        x[5] = x[4];
         // määra massiivi kaheksanda elemendi väärtuseks sama mis seitsmendal elemendil
-        int temp1 = x[0];
-        x[1] = temp1;
-
-
-        int temp2 = x[2];
-        x[3] = temp2;
-
-        int temp3 = x[4];
-        x[5] = temp3;
-
-        int temp = x[6];
-        x[7] = temp;
+        x[7] = x[6];
 
 
     }
@@ -158,13 +147,12 @@ public class LessonA {
         for (int i = 0; i < x.length; i++) {
 
 
-               if (i % 2 != 0) {
-                   x[i]=x[i-1];
+            if (i % 2 != 0) {
+                x[i] = x[i - 1];
 
 
+            }
 
-               }
-            System.out.println(x[i]);
 
 
         }

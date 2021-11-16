@@ -29,27 +29,21 @@ public class Lesson2c {
     //  kutsuge iga väärtuse korral välja meetodit getSeqLength
     //  salvestage maha kõige suurem ja funktsiooni lõpus tagastage leitud arv
     public static int sequence3n(int x, int y) {
-        int counter = 1;        // loeb k2esoleva numbri jada pikkust
-        int longestCount = 0;      // salvestab pikima numbri jada pikkuse
-        int longestNum = 0;         // salvestab pikima jadaga numbri
+
+        int maxLength = 0;
 
 
         for (int i = x; i <= y; i++) {          // loopib x ja y vahemikku
 
+            int currentCount = getSeqLength(i);
 
-            counter += getSeqLength(x);         // kutsume meetodi mis leiab antud numbri jada pikkuse ja liidab counterile
-
-            if (counter > longestCount) {       // v6rdleb kas k'es oleva nr jada on pikem kui eelmise
-                longestCount = counter;         // kui jah siis asendab
-                longestNum = i;                 // salvestab numbri enda
+            if (currentCount > maxLength) {
+                maxLength=currentCount;
 
             }
-
-            counter = 1;            // resetib counteri j'rgmise numbri jaoks
-            x = i + 1;              // resetib x kuna while loopis x muutus 1eks
         }
-        //System.out.println(longestNum);
-        return longestNum;              // tagastame numbri millel k6ige pikem jada
+        System.out.println(maxLength);
+        return maxLength;              // tagastame numbri millel k6ige pikem jada
     }
 
 
