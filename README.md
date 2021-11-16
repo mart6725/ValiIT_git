@@ -1,44 +1,63 @@
 # vali-it
 
 ## Slaidid
+### Kõik slaidid
+
 ### Java / SQL
-**Sissejuhatus**: https://drive.google.com/file/d/1eRkD-mdtXgaDU__MS0SFKUpktynqHaQD/view?usp=sharing    
-**Muutujad, funktsioonid, tingimuslaused**: https://drive.google.com/file/d/1KA2OI2VfAx91DH4-1RH5C2DjBex6duo7/view?usp=sharing  
-**Konsool, massiivid, tsüklid**: https://drive.google.com/file/d/1_r5hhwREet1__jD4wcWHB98NNvdCkuVf/view?usp=sharing  
-**GIT**: https://drive.google.com/file/d/1hLtX6assPAh6o8AtHTZp679UzpxcD99m/view?usp=sharing  
-**Json, REST, Web**: https://drive.google.com/file/d/1nUUMh6fNNe5RCPIUPElSeKqO9XJZEsq0/view?usp=sharing  
-**Request Body, DTO**: https://drive.google.com/file/d/1lW8GF9oJHvSr6sF9fjp-X2ShWZpVqppG/view?usp=sharing  
-**SQL**: https://drive.google.com/file/d/1aI8u9YQMVcIbqJyGgp_5JqImpIYm6Uzg/view?usp=sharing  
-**Architecture**: https://drive.google.com/file/d/1H5rjtj9EAtwbYzx6UURgXpO6P-UKaqwz/view?usp=sharing  
-**Liquibase**: https://drive.google.com/file/d/16uRjxDDWwznV1oR1mHfUjUz1CzafeNX-/view?usp=sharing  
-**SQL 2**: https://drive.google.com/file/d/1VV1XaEAFDaIGfTW0An8QvB8YnNWOSh5a/view?usp=sharing  
-**Hibernate, Spring Data** https://drive.google.com/file/d/1uX-NqpRoqBSj2M0LeWhodYgWj5Xw82b0/view?usp=sharing  
-**Exceptions**: https://drive.google.com/file/d/13Sr4g4S78II7Ghhy_BllJJzdJCmlqWST/view?usp=sharing  
-**Scheduled Tasks**: https://drive.google.com/file/d/14Ck_5v27A_NI7w1mzZfDCfj0rCgo4T1x/view?usp=sharing  
-**Testing**: https://drive.google.com/file/d/1sTL2x1qjMM7D-Ef0nT-qk_dq_q0WGZAA/view?usp=sharing  
-**Security**: https://drive.google.com/file/d/1vHIJm2otZHZrRea43x-GC6SLr8zttz-J/view?usp=sharing  
-**JWT/Security**: https://drive.google.com/file/d/133p8kIH9YJnEgmqmYOJHGAXMqEIhN8sU/view?usp=sharing  
+**Sissejuhatus**: https://docs.google.com/presentation/d/1oo7YRuyil34b2dSlZ-VW3oG22OFUk9sF/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Muutujad, tingimuslaused**: https://docs.google.com/presentation/d/1qkjpsEzB3zRmQiDTWDt0pVjaxAZMUtK0/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Stringid, funktsioonid**: https://docs.google.com/presentation/d/1JO6J6bWThu_DnzL9i5BuG2IWXuu8oazB/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Konsool, massiivid, tsüklid**: https://docs.google.com/presentation/d/1HCuQXJiybJgrbkGZNjEF40yFu1h8pY6N/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Objektid**:  https://docs.google.com/presentation/d/1tUDoakeTN1LERDlNhpSCndy8vVOcAoAM/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**GIT**: https://docs.google.com/presentation/d/1GY4NwADEZRZOP3hFHqilWfcphgZUKxNM/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Json, REST, Web**: https://docs.google.com/presentation/d/1FiTqVOGw5_vwBcdNqFcb9mDtHq9QViUM/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Request Body, DTO**: https://docs.google.com/presentation/d/1JaaNUCEDh_URn7dRGTZ_wrro40UExqWx/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Objects**: https://docs.google.com/presentation/d/1pws_MES-RBO1hgvEwghUvfb-OWsLyX0V/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**SQL**: https://docs.google.com/presentation/d/13lHd8Jn4_WE1KTtzwPlCPjbDJmGo5SsU/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Architecture**: https://docs.google.com/presentation/d/1DX4c6YWyDsqM4IQkJEMB4X62CfVjOQA8/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Liquibase, SQL 2**: https://docs.google.com/presentation/d/16xA4gzs99iqtoZN3JaEEe4DevloZUfWj/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Exceptions**: https://docs.google.com/presentation/d/1aIg_atuncSBuXpJR2UUsvEhO2qlYYug3/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
 ### HTML / CSS
-**HTML**:  https://drive.google.com/file/d/1GIKfmrQaR5SP-SRjt5WWyU-Kk4de5sWP/view?usp=sharing  
-**CSS**: https://drive.google.com/file/d/1PDfcsThCeSokY8FCEsFhB8uNyMwH9eZo/view?usp=sharing  
-**Input elements**: https://drive.google.com/file/d/1PixZ8PqNh6ar46VgYXjV8Qwr22zpI-LI/view?usp=sharing  
-**Javascript**: https://drive.google.com/file/d/107A2Y-SiNuogTrxcKg_1GtGr5I-ajGBz/view?usp=sharing  
-**Fetch and promise**: https://drive.google.com/file/d/1U6DegR1kbvmK_iXwMYnvp6YcVmki7rk9/view?usp=sharing  
-**Vue JS**: https://drive.google.com/file/d/17qky5pjJOeWVS39UE7Kd9TliqRgyJlp6/view?usp=sharing  
-## Lisaülesanded
-https://www.codingame.com/training/easy/the-descent  
+**HTML, CSS**: https://docs.google.com/presentation/d/1JJ3SZFz3HLu07Jp2Fz4MYAY2EbMkkCt_/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Javascript**: https://docs.google.com/presentation/d/1cpXlrYxl6Iyf8hRhWkVGhUWfWON8ergR/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Fetch and promise**: https://docs.google.com/presentation/d/1tlsXSEefP1cNHJNCqKr6Y8H6xH5v12G4/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Vue JS**: https://docs.google.com/presentation/d/18vi_5EqMK3e7N9UR1Y9u3eZ7W1Te0bvC/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+### Lisad
+**Scheduled Tasks**: https://docs.google.com/presentation/d/17REs-BUqlR5t346TcA_j9_hNerPH_oKi/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Security**: https://docs.google.com/presentation/d/13bsunVacy5j1ymkq9nNFFvNkUlnB16fC/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Email**: https://docs.google.com/presentation/d/1A_kZIUMnHrmmEUXsEjSgh44os0pBxGjb/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Testing**: https://docs.google.com/presentation/d/1WdHvlF1a39em8JdSjGdM_LfcAkkFogo0/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
+**Deploy**: https://docs.google.com/presentation/d/1vfbP6hX5z9PI9bnxRC08Jt6FeaZvaEXq/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true  
 
-https://www.codingame.com/training/medium/skynet-revolution-episode-1  
-https://www.codingame.com/training/medium/don't-panic-episode-1  
+## Lisaülesanded (väiksem number = raskem ülesanne)
+### Raskus 8
+https://www.codewars.com/kata/557cd6882bfa3c8a9f0000c1  
+https://www.codewars.com/kata/57d814e4950d8489720008db  
+https://www.codewars.com/kata/5b73fe9fb3d9776fbf00009e  
+### Raskus 7
+https://www.codewars.com/kata/5390bac347d09b7da40006f6  
+https://www.codewars.com/kata/5fc4349ddb878a0017838d0f  
+https://www.codewars.com/kata/5a090c4e697598d0b9000004  
+### Raskus 6
+https://www.codewars.com/kata/517abf86da9663f1d2000003  
+https://www.codewars.com/kata/554ca54ffa7d91b236000023  
+### Raskus 5
+https://www.codewars.com/kata/59ccf051dcc4050f7800008f  
+https://www.codewars.com/kata/5a24a35a837545ab04001614   
+### Raskus 4
+https://www.codewars.com/kata/5819f1c3c6ab1b2b28000624  
+https://www.codewars.com/kata/521c2db8ddc89b9b7a0000c1  
 
-https://www.codingame.com/training/hard/skynet-revolution-episode-2  
-https://www.codingame.com/training/hard/don't-panic-episode-2  
+##  Viited
+**Intellije reference card**: https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf  
+**Java (TTÜ materjalid)**: https://ained.ttu.ee/javadoc/index.html  
+**Git**: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+**Agile**: https://www.youtube.com/watch?v=a-BOSpxYJ9M&ab_channel=GOTOConferences  
+**Fonts in Vue**: https://reactgo.com/add-fonts-vue-app/  
+**Vue programmatic**: https://router.vuejs.org/guide/essentials/navigation.html  
 
 ## Testid
-**Test 1 (09.11.2020)**:   
-**Test 2 (16.11.2020)**: https://drive.google.com/file/d/1BQoDmQYq2fTDqV4eHAbFbVBk9C-bWg9a/view?usp=sharing  
-**Test 3 (23.11.2020)**: https://drive.google.com/file/d/1SjuCmoci_Zugl2qPl9QCFV79qYMsD3F2/view?usp=sharing  
-**Test 4 (30.11.2020)**:  
+Test 1: https://docs.google.com/presentation/d/12o4Xz7XY0sMRFRZT5vc5WbKrIAszbnaq/edit?usp=sharing&ouid=113984198037355275739&rtpof=true&sd=true
 
-## Kodune lugemine
-* https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html  
+## Vanad IntelliJ versioonid
+https://www.jetbrains.com/idea/download/other.html
