@@ -1,10 +1,15 @@
 package ee.bcs.valiit.controller;
 
 import ee.bcs.valiit.tasks.employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 // tagastaks kogu listi
 //tagastaks indexi j'rgi (path variable) yhe tootaja
 //saaks yle kirjutada indexi jargi (path variable) request body
@@ -13,6 +18,9 @@ import java.util.List;
 public class employeeController {
     private List<employee> employeeList = new ArrayList<>();
 
+
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
     @GetMapping("employee")
     public List<employee>  getEmployee(){
@@ -24,7 +32,17 @@ public class employeeController {
     @PostMapping("employee")
     public void saveEmployee(@RequestBody employee employee) {
 
-         employeeList.add(employee);            // lisame uue employee objekti listi
+        String sql="INSERT INTO employee(first_name, last_name, position, address) VALUES (:firstName,:lastName,:position,:address)";
+        Map<String, Object> paramMap = new HashMap<>();
+
+        paramMap.put("firstName",employee.getFirstName());
+        paramMap.put("lastName",employee.getLastName());
+        paramMap.put("position",employee.getPosition());
+        paramMap.put("address",employee.getAddress());
+        jdbcTemplate.update(sql,paramMap);
+
+
+        employeeList.add(employee);            // lisame uue employee objekti listi
 
 
     }

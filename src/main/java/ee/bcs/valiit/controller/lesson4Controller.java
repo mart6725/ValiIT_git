@@ -1,91 +1,154 @@
 package ee.bcs.valiit.controller;
 
 import ee.bcs.valiit.tasks.bankCustomer;
+import ee.bcs.valiit.tasks.employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class lesson4Controller {
     HashMap<Integer, bankCustomer> accountBalanceMap = new HashMap<>();
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
-    @GetMapping("customers")
-    public HashMap<Integer, bankCustomer> getCustomers() {
+    //*******BALANCE************************************************************
 
-        return accountBalanceMap;
+    @GetMapping("customers/getBalance/{accountNumber}")
+    public String getBalance(@PathVariable("accountNumber") Integer accountNumber) {
+        String sql = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";           // kysime andmebaasist
+
+        Map<String, Object> paraMap = new HashMap<>();
+        paraMap.put("accountNumber", accountNumber);
+        int balance = jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
+        return "Arve number: " + accountNumber + ". Saldo: " + balance;        // viimane on et mis tyypi tahame tagastada
     }
 
 
-    @GetMapping("customers/getBalance")
-    public String getBalance(@RequestParam("acNum") int acNum) {
-
-        bankCustomer customer = accountBalanceMap.get(acNum);
-        int balance = customer.getBalance();
-        return "account " + acNum + " balance is " + balance;
-    }
-
+    //***** LISA KONTO******************************************************************************************
 
     @PostMapping("customers")
-    public String addAccount(@RequestParam("acNum") int acNum,
-                             @RequestParam("acName") String name) {
+    public String addAccount(@RequestBody bankCustomer customer) {
 
-        bankCustomer newCustomer = new bankCustomer(acNum, name, false, 0);
-        accountBalanceMap.put(acNum, newCustomer);
+        String sql = "INSERT INTO bank_customers(account_number, customer_name, is_locked, balance) VALUES (:accountNumber,:customerName,:isLocked,:balance)";
 
-        return "Konto nimega " + name + " ja  numbriga " + acNum + " on  loodud";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("accountNumber", customer.getAccountNumber());
+        paramMap.put("customerName", customer.getCustomerName());
+        paramMap.put("isLocked", customer.isLocked());
+        paramMap.put("balance", customer.getBalance());
+
+        jdbcTemplate.update(sql, paramMap);
+
+        return "Konto loodud  name: " + customer.getCustomerName() + " Account Num: " + customer.getAccountNumber();
     }
 
-    @PutMapping("customers/lock")
-    public String lock(@RequestParam("acNum") int acNum,
-                       @RequestParam("lock") boolean lock) {
+    //****KONTO LUKUSTAMINE********************************************************************
 
-        bankCustomer customer = accountBalanceMap.get(acNum);
-        customer.setLocked(lock);
+
+    @PutMapping("customers/lock")
+    public String lock(@RequestParam("acNum") int acNum) {
+
+        String sql = "UPDATE bank_customers SET is_locked=true WHERE account_number= :accountNum";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("accountNum", acNum);
+
+        jdbcTemplate.update(sql, paramMap);
+
 
         return "Konto numbriga " + acNum + " on  lukus";
     }
 
-    @PutMapping("customers/unlock")
-    public String unlock(@RequestParam("acNum") int acNum,
-                         @RequestParam("lock") boolean lock) {
+    //****KONTO LAHTI LUKUSTAMINE**********************************************************************************
 
-        bankCustomer customer = accountBalanceMap.get(acNum);
-        customer.setLocked(lock);
+
+    @PutMapping("customers/unlock")
+    public String unlock(@RequestParam("acNum") int acNum) {
+
+        String sql = "UPDATE bank_customers SET is_locked=false WHERE account_number= :accountNum";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("accountNum", acNum);
+
+        jdbcTemplate.update(sql, paramMap);
+
 
         return "Konto numbriga " + acNum + " on  lukust lahti";
     }
 
 
-    @PutMapping("customers/addBalance")
-    public String addBalance(@RequestParam("acNum") int acNum,
-                             @RequestParam("amount") int amount) {
-        bankCustomer customer = accountBalanceMap.get(acNum);
-        if (amount > 0 && !customer.isLocked()) {
+    //**** RAHA LISAMINE*************************************************************************
 
-            int initialBalance = customer.getBalance();
-            customer.setBalance(initialBalance + amount);
+
+    @PutMapping("customers/addBalance")
+    public String addBalance(@RequestBody bankCustomer customer) {
+
+
+        String sql3 = "SELECT is_locked FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap2 = new HashMap<>();
+        paraMap2.put("accountNumber", customer.getAccountNumber());
+        boolean isLocked = jdbcTemplate.queryForObject(sql3, paraMap2, Boolean.class);
+
+
+        if (customer.getBalance() > 0 && !isLocked ) {
+
+            String sql2 = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";           // kysime andmebaasist
+            Map<String, Object> paraMap1 = new HashMap<>();                                 //kysime palju kontol raha
+            paraMap1.put("accountNumber", customer.getAccountNumber());
+            int balanceInitial = jdbcTemplate.queryForObject(sql2, paraMap1, Integer.class);
+
+
+            String sql = "UPDATE bank_customers SET balance= :balance WHERE account_number= :accountNum";  //lisame kontole raha juurde
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("accountNum", customer.getAccountNumber());
+            paramMap.put("balance", customer.getBalance() + balanceInitial);         // liidan esialgse balance juurde
+            jdbcTemplate.update(sql, paramMap);
+
 
         } else {
             return "account is locked or invalid amount";
         }
-        return amount + " added to account ";
+        return "Added " + customer.getBalance() + " EUR ";
     }
 
+
+    //V6TA RAHA V2LJA***********************************************************************
+
     @PutMapping("customers/withdraw")
-    public String withdraw(@RequestParam("acNum") int acNum,
-                           @RequestParam("amount") int amount) {
+    public String withdraw(@RequestBody bankCustomer customer) {
 
-        bankCustomer customer = accountBalanceMap.get(acNum);
+        String sql3 = "SELECT is_locked FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap2 = new HashMap<>();
+        paraMap2.put("accountNumber", customer.getAccountNumber());
+        boolean isLocked = jdbcTemplate.queryForObject(sql3, paraMap2, Boolean.class);
 
-        if (amount > 0 && amount <= customer.getBalance() && !customer.isLocked()) {
+        String sql2 = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";           // kysime andmebaasist
+        Map<String, Object> paraMap1 = new HashMap<>();                                 //kysime palju kontol raha
+        paraMap1.put("accountNumber", customer.getAccountNumber());
+        int balanceInitial = jdbcTemplate.queryForObject(sql2, paraMap1, Integer.class);
 
-            int initialBalance = customer.getBalance();
-            customer.setBalance(initialBalance - amount);
 
-            return "Successfully withdrawn " + amount + " Balance is " + customer.getBalance();
+        if (customer.getBalance() > 0 && !isLocked && customer.getBalance() <= balanceInitial) {
+
+
+
+
+            String sql = "UPDATE bank_customers SET balance= :balance WHERE account_number= :accountNum";  //lisame kontole raha juurde
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("accountNum", customer.getAccountNumber());
+            paramMap.put("balance", balanceInitial - customer.getBalance());         // liidan esialgse balance juurde
+            jdbcTemplate.update(sql, paramMap);
+
+
         } else {
-            return "account is locked or invalid amount ";
+            return "account is locked or invalid amount";
         }
+        return customer.getBalance() + " EUR Withdrawn ";
+
     }
 
     //
@@ -93,22 +156,46 @@ public class lesson4Controller {
     public String transfer(@RequestParam("acNumFrom") int acNumFrom,
                            @RequestParam("acNumTo") int acNumTo,
                            @RequestParam("amount") int amount) {
-        bankCustomer customerFrom = accountBalanceMap.get(acNumFrom);
-        bankCustomer customerTo = accountBalanceMap.get(acNumTo);
+
+        String sql3LockedFrom = "SELECT is_locked FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap2LockedFrom = new HashMap<>();
+        paraMap2LockedFrom.put("accountNumber", acNumFrom);
+        boolean isLockedFrom = jdbcTemplate.queryForObject(sql3LockedFrom, paraMap2LockedFrom, Boolean.class);
+
+        String sql3LockedTo = "SELECT is_locked FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap2LockedTo = new HashMap<>();
+        paraMap2LockedTo.put("accountNumber", acNumTo);
+        boolean isLockedTo = jdbcTemplate.queryForObject(sql3LockedTo, paraMap2LockedTo, Boolean.class);
+
+        String sql2BalanceFrom = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap1BalanceFrom = new HashMap<>();
+        paraMap1BalanceFrom.put("accountNumber", acNumFrom);
+        int balanceInitialFrom = jdbcTemplate.queryForObject(sql2BalanceFrom, paraMap1BalanceFrom, Integer.class);
+
+        String sql2BalanceTo = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap1BalanceTo = new HashMap<>();
+        paraMap1BalanceTo.put("accountNumber", acNumTo);
+        int balanceInitialTo = jdbcTemplate.queryForObject(sql2BalanceTo, paraMap1BalanceTo, Integer.class);
 
 
-        if (amount > 0 && amount <= customerFrom.getBalance() && !customerFrom.isLocked() && !customerTo.isLocked()) {
+
+        if (amount > 0 && !isLockedFrom && !isLockedTo && amount<= balanceInitialFrom) {
+
+            String sql = "UPDATE bank_customers SET balance= :balance WHERE account_number= :accountNum";
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("accountNum", acNumFrom);
+            paramMap.put("balance", balanceInitialFrom - amount);
+            jdbcTemplate.update(sql, paramMap);
+
+            String sql1 = "UPDATE bank_customers SET balance= :balance WHERE account_number= :accountNum";
+            Map<String, Object> paramMap1 = new HashMap<>();
+            paramMap1.put("accountNum", acNumTo);
+            paramMap1.put("balance", balanceInitialTo + amount);
+            jdbcTemplate.update(sql1, paramMap1);
 
 
-            int currentBalanceFrom = customerFrom.getBalance();
-            customerFrom.setBalance(currentBalanceFrom - amount);
 
-            int currentBalanceTo = customerTo.getBalance();
-            customerTo.setBalance(currentBalanceTo + amount);
-
-            return "Successfully transfered  " + amount + " to account " + acNumTo +
-                    " . Initial account balance is " + customerFrom.getBalance()
-                    + " . Receiving account balance is " + customerTo.getBalance();
+            return "Successfully transfered  " + amount + " to account " + acNumTo ;
 
         } else {
             return "account is locked or invalid amount ";

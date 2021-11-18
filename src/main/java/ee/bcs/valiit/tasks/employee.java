@@ -8,25 +8,32 @@ import java.util.List;
 
 public class employee {
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String position;
     private String address;
-    private String id;
 
-    public String getId() {
-        return id;
+    public employee(String firstName, String lastName, String position, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.address = address;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPosition() {
