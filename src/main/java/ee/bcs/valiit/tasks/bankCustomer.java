@@ -4,15 +4,15 @@ public class bankCustomer {
 
     private int accountNumber;
     private String customerName;
-    boolean isLocked;
+    boolean locked;
     private int balance;
-
-    public bankCustomer(int accountNumber, String customerName, boolean isLocked, int balance) {
-        this.accountNumber = accountNumber;
-        this.customerName = customerName;
-        this.isLocked = isLocked;
-        this.balance = balance;
-    }
+//
+//    public bankCustomer(int accountNumber, String customerName, boolean isLocked, int balance) {
+//        this.accountNumber = accountNumber;
+//        this.customerName = customerName;
+//        this.isLocked = isLocked;
+//        this.balance = balance;
+//    }
 
     public String getCustomerName() {
         return customerName;
@@ -23,11 +23,11 @@ public class bankCustomer {
     }
 
     public boolean isLocked() {
-        return isLocked;
+        return locked;
     }
 
     public void setLocked(boolean locked) {
-        isLocked = locked;
+        this.locked = locked;
     }
 
     public int getAccountNumber() {
