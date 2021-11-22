@@ -11,8 +11,8 @@ import java.util.List;
 
 @RestController
 public class lesson4Controller {
-    HashMap<Integer, bankCustomer> accountBalanceMap = new HashMap<>();
-//    @Autowired                  // sellega saame kasutada jdbcTemplate
+
+//    @Autowired                                                    // sellega saame kasutada jdbcTemplate
 //    private NamedParameterJdbcTemplate jdbcTemplate;
 
 
@@ -25,17 +25,18 @@ public class lesson4Controller {
     @GetMapping("customers/trans")
     public List<Transaction> getTransactions(@RequestParam("acNum") int acNum) {
 
-        return customerService.getTranactions(acNum);
+        return customerService.getTransactions(acNum);
 
     }
 
-
+// *** TERVE KLIENDI TABEL*************************************************************
     @GetMapping("customers/all")
     public List<bankCustomer> getAll() {
 
-
         return customerService.allCustomers();
     }
+
+
 
 
     //*******BALANCE************************************************************
@@ -63,7 +64,6 @@ public class lesson4Controller {
     @PutMapping("customers/lock")
     public String lock(@RequestParam("acNum") int acNum) {
 
-
         return customerService.lock(acNum);
     }
 
@@ -84,7 +84,6 @@ public class lesson4Controller {
     @PutMapping("customers/addBalance")
     public String addBalance(@RequestBody bankCustomer customer) {
 
-
         return customerService.deposit(customer.getAccountNumber(), customer.getBalance());
     }
 
@@ -93,7 +92,6 @@ public class lesson4Controller {
 
     @PutMapping("customers/withdraw")
     public String withdraw(@RequestBody bankCustomer customer) {
-
 
         return customerService.withdraw(customer.getAccountNumber(), customer.getBalance());
 

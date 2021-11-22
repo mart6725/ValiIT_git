@@ -11,8 +11,7 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    //    @Autowired
-//    private NamedParameterJdbcTemplate jdbcTemplate;
+
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -20,8 +19,6 @@ public class CustomerService {
     public List<bankCustomer> allCustomers() {
 
         return customerRepository.allCustomers();
-
-
     }
 
 
@@ -44,39 +41,43 @@ public class CustomerService {
     }
 
 
-    //****LUKSUTA******************************************************
+    //****LOCK****************************************************************************************************
     public String lock(int acNum) {
 
-        customerRepository.lock(acNum);
+        customerRepository.locking(acNum,true);
 
         return "Konto numbriga " + acNum + " on  lukus";
 
     }
 
+
     //***UNLOCK******************************************************************************************************
 
     public String unlock(int acNum) {
 
-        customerRepository.unlock(acNum);
+        customerRepository.locking(acNum,false);
 
 
         return "Konto numbriga " + acNum + " on  lukust lahti";
 
     }
 
+
     //***** DEPOSIT*************************************************************************************************
 
     public String deposit(int accountNumber, int amount) {
 
 
-        bankCustomer result = customerRepository.getBalanceAndLocked(accountNumber);
+        bankCustomer result = customerRepository.getCustomer(accountNumber);
 
         if (amount > 0 && !result.isLocked()) {
 
-            customerRepository.addBalance(accountNumber, amount);
+            int newBalance = result.getBalance() + amount;
+            customerRepository.changeBalance(accountNumber, newBalance);
 
 //**** LISAME TRANSACTIONITE TABELISSE
-            customerRepository.addToTransactionHistoryDeposit(accountNumber, amount);
+            String type = " Successfully deposited " + amount + " EUR";
+            customerRepository.addToTransactionHistory(accountNumber, type);
 
 
         } else {
@@ -87,20 +88,23 @@ public class CustomerService {
     }
 
 
+
     //*****WITHDRAW**********************************************************************************
 
     public String withdraw(int accountNumber, int amount) {
 
-        bankCustomer result = customerRepository.getBalanceAndLocked(accountNumber);
+        bankCustomer result = customerRepository.getCustomer(accountNumber);
 
 
         if (amount > 0 && !result.isLocked()) {
 
-            customerRepository.withdraw(accountNumber, amount);
+            int newBalance = result.getBalance() - amount;
+            customerRepository.changeBalance(accountNumber, newBalance);
 
-//**** LISAME TRANSACTIONITE TABELISSE*
+    //**** LISAME TRANSACTIONITE TABELISSE
 
-            customerRepository.addToTransactionHistoryWithdraw(accountNumber, amount);
+            String type = " Successfully withdrawn " + amount + " EUR";
+            customerRepository.addToTransactionHistory(accountNumber, type);
 
         } else {
             return "account is locked or invalid amount";
@@ -108,23 +112,33 @@ public class CustomerService {
         return "Withdrawn " + amount + " EUR  ";
 
     }
+
+
+
+
     //******* TRANSFER************************************************************************************
 
     public String transfer(int acNumFrom, int acNumTo, int amount) {
 
-        bankCustomer customerFrom = customerRepository.getBalanceAndLocked(acNumFrom);
-        bankCustomer customerTo = customerRepository.getBalanceAndLocked(acNumTo);
+            bankCustomer customerFrom = customerRepository.getCustomer(acNumFrom);
+            bankCustomer customerTo = customerRepository.getCustomer(acNumTo);
 
 
         if (amount > 0 && !customerFrom.isLocked() && !customerTo.isLocked() && amount <= customerFrom.getBalance()) {
 
-            customerRepository.withdraw(acNumFrom, amount);
-            customerRepository.addBalance(acNumTo, amount);
+            int newBalanceFrom = customerFrom.getBalance() - amount;
+            int newBalanceTo = customerTo.getBalance() + amount;
+
+            customerRepository.changeBalance(acNumFrom, newBalanceFrom);
+            customerRepository.changeBalance(acNumTo, newBalanceTo);
+
+
 
             // ** add to trans history
-            customerRepository.addToTransactionHistoryTransferFrom(acNumFrom, acNumTo, amount);
-
-            customerRepository.addToTransactionHistoryTransferTo(acNumFrom, acNumTo, amount);
+            String typeFrom = " Transfered " + amount + " EUR to account " + acNumTo ;
+            String  typeTo = " Received " + amount + " EUR from account " + acNumFrom;
+            customerRepository.addToTransactionHistory(acNumFrom,typeFrom);
+            customerRepository.addToTransactionHistory(acNumTo,typeTo);
 
             return "Successfully transfered  " + amount + " to account " + acNumTo;
 
@@ -132,10 +146,12 @@ public class CustomerService {
             return "account is locked or invalid amount ";
         }
     }
+
+
+
     //***GET CUSTOMER TRANSACITONS******************************************************************
 
-    public List<Transaction> getTranactions(int acNum) {
-
+    public List<Transaction> getTransactions(int acNum) {
 
         return customerRepository.getCustomerTransactions(acNum);
     }
