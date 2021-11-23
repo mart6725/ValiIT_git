@@ -1,6 +1,6 @@
 package ee.bcs.valiit.controller;
 
-import ee.bcs.valiit.tasks.dtoTest;
+import ee.bcs.valiit.tasks.DtoTest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class dtoTestController {
 
     @GetMapping("testDto/test")
-    public dtoTest testDto() {
+    public DtoTest testDto() {
 
-        dtoTest dtoTest = new dtoTest();
+        DtoTest dtoTest = new DtoTest();
         dtoTest.setName("Test");
         dtoTest.setDate("2021");
         dtoTest.setDuration(24);
@@ -22,7 +22,7 @@ public class dtoTestController {
 
     }
     @PostMapping("dtoTest")
-    public dtoTest saveTest (@RequestBody dtoTest test){
+    public DtoTest saveTest (@RequestBody DtoTest test){
 
         return test;
     }

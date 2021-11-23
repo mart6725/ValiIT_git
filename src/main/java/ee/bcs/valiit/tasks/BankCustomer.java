@@ -1,6 +1,6 @@
 package ee.bcs.valiit.tasks;
 
-public class bankCustomer {
+public class BankCustomer {
 
     private int accountNumber;
     private String customerName;

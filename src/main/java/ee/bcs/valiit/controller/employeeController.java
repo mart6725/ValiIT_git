@@ -1,6 +1,6 @@
 package ee.bcs.valiit.controller;
 
-import ee.bcs.valiit.tasks.employee;
+import ee.bcs.valiit.tasks.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +16,21 @@ import java.util.Map;
 //eemalda vastaval indexil
 @RestController
 public class employeeController {
-    private List<employee> employeeList = new ArrayList<>();
+    private List<Employee> employeeList = new ArrayList<>();
 
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @GetMapping("employee")
-    public List<employee>  getEmployee(){
+    public List<Employee>  getEmployee(){
 
         return employeeList;
     }
 
 
     @PostMapping("employee")
-    public void saveEmployee(@RequestBody employee employee) {
+    public void saveEmployee(@RequestBody Employee employee) {
 
         String sql="INSERT INTO employee(first_name, last_name, position, address) VALUES (:firstName,:lastName,:position,:address)";
         Map<String, Object> paramMap = new HashMap<>();
@@ -48,13 +48,13 @@ public class employeeController {
     }
 
     @GetMapping("employee/getEmployee/{id}")         // id j2rgi tagastame
-    public employee getByIndex (@PathVariable("id") int id){
+    public Employee getByIndex (@PathVariable("id") int id){
 
         return employeeList.get(id);            // idexi j'rgi otsime
 
     }
     @PutMapping("employee/update/{id}")
-    public void updateByIndex(@RequestBody employee employee,@PathVariable("id") int id){
+    public void updateByIndex(@RequestBody Employee employee, @PathVariable("id") int id){
         employeeList.set(id,employee);              /// set on ylekirjutamine indexi j'rgi
 
 

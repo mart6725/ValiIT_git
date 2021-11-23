@@ -1,7 +1,7 @@
 package ee.bcs.valiit.Repository;
 
+import ee.bcs.valiit.tasks.BankCustomer;
 import ee.bcs.valiit.tasks.Transaction;
-import ee.bcs.valiit.tasks.bankCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -31,19 +31,19 @@ public class CustomerRepository {
 
     }
 
-    public List<bankCustomer> allCustomers() {
+    public List<BankCustomer> allCustomers() {
 
         String sql = "SELECT *FROM bank_customers";
         Map<String, Object> paramMap = new HashMap<>();
-        List<bankCustomer> result = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<>(bankCustomer.class));         // v6i new BeanPropertyRowMapper<>(Transaction.class)
+        List<BankCustomer> result = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<>(BankCustomer.class));
         return result;
 
     }
 
     public int getBalance(int accountNumber) {
 
-        String sql = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";           // kysime andmebaasist
-        Map<String, Object> paraMap = new HashMap<>();                      // teeme paramapi
+        String sql = "SELECT balance FROM bank_customers WHERE account_number= :accountNumber";
+        Map<String, Object> paraMap = new HashMap<>();
         paraMap.put("accountNumber", accountNumber);
         int balance = jdbcTemplate.queryForObject(sql, paraMap, Integer.class);
         return balance;
@@ -60,12 +60,12 @@ public class CustomerRepository {
     }
 
 
-    public bankCustomer getCustomer(int accountNumber) {
+    public BankCustomer getCustomer(int accountNumber) {
 
         String sql = "SELECT *FROM bank_customers WHERE account_number = :accountNumber";
         Map<String, Object> paramMap1 = new HashMap<>();
         paramMap1.put("accountNumber", accountNumber);
-        bankCustomer result = jdbcTemplate.queryForObject(sql, paramMap1, new BeanPropertyRowMapper<>(bankCustomer.class));
+        BankCustomer result = jdbcTemplate.queryForObject(sql, paramMap1, new BeanPropertyRowMapper<>(BankCustomer.class));
         return result;
     }
 

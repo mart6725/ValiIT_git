@@ -1,8 +1,8 @@
 package ee.bcs.valiit.Service;
 
 import ee.bcs.valiit.Repository.CustomerRepository;
+import ee.bcs.valiit.tasks.BankCustomer;
 import ee.bcs.valiit.tasks.Transaction;
-import ee.bcs.valiit.tasks.bankCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
 
-    public List<bankCustomer> allCustomers() {
+    public List<BankCustomer> allCustomers() {
 
         return customerRepository.allCustomers();
     }
@@ -44,7 +44,7 @@ public class CustomerService {
     //****LOCK****************************************************************************************************
     public String lock(int acNum) {
 
-        customerRepository.locking(acNum,true);
+        customerRepository.locking(acNum, true);
 
         return "Konto numbriga " + acNum + " on  lukus";
 
@@ -55,7 +55,7 @@ public class CustomerService {
 
     public String unlock(int acNum) {
 
-        customerRepository.locking(acNum,false);
+        customerRepository.locking(acNum, false);
 
 
         return "Konto numbriga " + acNum + " on  lukust lahti";
@@ -67,8 +67,7 @@ public class CustomerService {
 
     public String deposit(int accountNumber, int amount) {
 
-
-        bankCustomer result = customerRepository.getCustomer(accountNumber);
+            BankCustomer result = customerRepository.getCustomer(accountNumber);
 
         if (amount > 0 && !result.isLocked()) {
 
@@ -88,12 +87,11 @@ public class CustomerService {
     }
 
 
-
     //*****WITHDRAW**********************************************************************************
 
     public String withdraw(int accountNumber, int amount) {
 
-        bankCustomer result = customerRepository.getCustomer(accountNumber);
+        BankCustomer result = customerRepository.getCustomer(accountNumber);
 
 
         if (amount > 0 && !result.isLocked()) {
@@ -101,7 +99,7 @@ public class CustomerService {
             int newBalance = result.getBalance() - amount;
             customerRepository.changeBalance(accountNumber, newBalance);
 
-    //**** LISAME TRANSACTIONITE TABELISSE
+            //**** LISAME TRANSACTIONITE TABELISSE
 
             String type = " Successfully withdrawn " + amount + " EUR";
             customerRepository.addToTransactionHistory(accountNumber, type);
@@ -114,14 +112,12 @@ public class CustomerService {
     }
 
 
-
-
     //******* TRANSFER************************************************************************************
 
     public String transfer(int acNumFrom, int acNumTo, int amount) {
 
-            bankCustomer customerFrom = customerRepository.getCustomer(acNumFrom);
-            bankCustomer customerTo = customerRepository.getCustomer(acNumTo);
+            BankCustomer customerFrom = customerRepository.getCustomer(acNumFrom);
+            BankCustomer customerTo = customerRepository.getCustomer(acNumTo);
 
 
         if (amount > 0 && !customerFrom.isLocked() && !customerTo.isLocked() && amount <= customerFrom.getBalance()) {
@@ -133,12 +129,11 @@ public class CustomerService {
             customerRepository.changeBalance(acNumTo, newBalanceTo);
 
 
-
             // ** add to trans history
-            String typeFrom = " Transfered " + amount + " EUR to account " + acNumTo ;
-            String  typeTo = " Received " + amount + " EUR from account " + acNumFrom;
-            customerRepository.addToTransactionHistory(acNumFrom,typeFrom);
-            customerRepository.addToTransactionHistory(acNumTo,typeTo);
+            String typeFrom = " Transfered " + amount + " EUR to account " + acNumTo;
+            String typeTo = " Received " + amount + " EUR from account " + acNumFrom;
+            customerRepository.addToTransactionHistory(acNumFrom, typeFrom);
+            customerRepository.addToTransactionHistory(acNumTo, typeTo);
 
             return "Successfully transfered  " + amount + " to account " + acNumTo;
 
@@ -146,7 +141,6 @@ public class CustomerService {
             return "account is locked or invalid amount ";
         }
     }
-
 
 
     //***GET CUSTOMER TRANSACITONS******************************************************************

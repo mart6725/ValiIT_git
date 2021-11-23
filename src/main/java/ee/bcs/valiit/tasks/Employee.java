@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
 
-public class employee {
+public class Employee {
 
     private String firstName;
     private String lastName;
     private String position;
     private String address;
 
-    public employee(String firstName, String lastName, String position, String address) {
+    public Employee(String firstName, String lastName, String position, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;

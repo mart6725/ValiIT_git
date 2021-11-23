@@ -1,6 +1,6 @@
 package ee.bcs.valiit.tasks;
 
-public class dtoTest {
+public class DtoTest {
 
     private String name;
     private String date;

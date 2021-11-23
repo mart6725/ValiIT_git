@@ -1,12 +1,11 @@
 package ee.bcs.valiit.controller;
 
 import ee.bcs.valiit.Service.CustomerService;
+import ee.bcs.valiit.tasks.BankCustomer;
 import ee.bcs.valiit.tasks.Transaction;
-import ee.bcs.valiit.tasks.bankCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -29,14 +28,12 @@ public class lesson4Controller {
 
     }
 
-// *** TERVE KLIENDI TABEL*************************************************************
+    // *** TERVE KLIENDI TABEL*************************************************************
     @GetMapping("customers/all")
-    public List<bankCustomer> getAll() {
+    public List<BankCustomer> getAll() {
 
         return customerService.allCustomers();
     }
-
-
 
 
     //*******BALANCE************************************************************
@@ -51,7 +48,7 @@ public class lesson4Controller {
     //***** LISA KONTO******************************************************************************************
 
     @PostMapping("customers")
-    public String addAccount(@RequestBody bankCustomer customer) {
+    public String addAccount(@RequestBody BankCustomer customer) {
 
 
         return customerService.createAccount(customer.getAccountNumber(),
@@ -82,7 +79,7 @@ public class lesson4Controller {
 
 
     @PutMapping("customers/addBalance")
-    public String addBalance(@RequestBody bankCustomer customer) {
+    public String addBalance(@RequestBody BankCustomer customer) {
 
         return customerService.deposit(customer.getAccountNumber(), customer.getBalance());
     }
@@ -91,7 +88,7 @@ public class lesson4Controller {
     //V6TA RAHA V2LJA***********************************************************************
 
     @PutMapping("customers/withdraw")
-    public String withdraw(@RequestBody bankCustomer customer) {
+    public String withdraw(@RequestBody BankCustomer customer) {
 
         return customerService.withdraw(customer.getAccountNumber(), customer.getBalance());
 
