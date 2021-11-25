@@ -1,7 +1,10 @@
 package ee.bcs.valiit.Service;
 
+import ee.bcs.valiit.Exception.ApplicationException;
 import ee.bcs.valiit.Repository.CustomerRepository;
-import ee.bcs.valiit.tasks.BankCustomer;
+import ee.bcs.valiit.tasks.BankAccounts;
+import ee.bcs.valiit.tasks.Client;
+import ee.bcs.valiit.tasks.ClientsAndAccounts;
 import ee.bcs.valiit.tasks.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,19 +19,52 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
 
-    public List<BankCustomer> allCustomers() {
+    //**KOGU INFO*********************************************************************************
 
-        return customerRepository.allCustomers();
+    public List<ClientsAndAccounts> allInfo() {
+
+        return customerRepository.allInfo();
+    }
+
+    //*K6IK KONTOD**************************************************************************
+    public List<BankAccounts> allAccounts() {
+
+        return customerRepository.allAccounts();
+    }
+    //**K6IK KLIENDID**********************************************************************
+
+    public List<Client> allClients() {
+
+        return customerRepository.allClients();
     }
 
 
-//** TEEME KASUTAJA**************************************************************************************
+    //KLIENDI LOOMINE********************************************************************************
 
-    public String createAccount(int accountNumber, String customerName, boolean locked, int balance) {
+    public String createClient(String firstName,String lastName,String address) {
 
-        customerRepository.createAccount(accountNumber, customerName, locked, balance);
+        int clientId = customerRepository.createClient(firstName,lastName,address);
 
-        return "Konto loodud  name: " + customerName + " Account Num: " + accountNumber;
+
+        return "Konto loodud  Account name: " + firstName + " " + lastName + " client id : " + clientId;
+
+
+    }
+
+
+
+
+
+
+//** TEEME KONTO**************************************************************************************
+
+    public String createAccount(int accountNumber, int clientId, boolean locked, int balance) {
+
+        customerRepository.createAccount(accountNumber, clientId, locked, balance);
+
+
+
+        return "Konto loodud  id: " + clientId + " Account Num: " + accountNumber;
 
 
     }
@@ -67,9 +103,11 @@ public class CustomerService {
 
     public String deposit(int accountNumber, int amount) {
 
-            BankCustomer result = customerRepository.getCustomer(accountNumber);
+            BankAccounts result = customerRepository.getCustomer(accountNumber);
 
-        if (amount > 0 && !result.isLocked()) {
+        if (amount <= 0 || result.isLocked()) {
+            throw new ApplicationException(" amount peaks olema suurem kui 0 v6i konto on lukus");
+        }
 
             int newBalance = result.getBalance() + amount;
             customerRepository.changeBalance(accountNumber, newBalance);
@@ -79,9 +117,6 @@ public class CustomerService {
             customerRepository.addToTransactionHistory(accountNumber, type);
 
 
-        } else {
-            return "account is locked or invalid amount";
-        }
         return "Added " + amount + " EUR  ";
 
     }
@@ -91,10 +126,12 @@ public class CustomerService {
 
     public String withdraw(int accountNumber, int amount) {
 
-        BankCustomer result = customerRepository.getCustomer(accountNumber);
+        BankAccounts result = customerRepository.getCustomer(accountNumber);
 
+        if (amount <= 0 || result.isLocked()) {
+            throw new ApplicationException(" amount peaks olema suurem kui 0 v6i konto on lukus");
+        }
 
-        if (amount > 0 && !result.isLocked()) {
 
             int newBalance = result.getBalance() - amount;
             customerRepository.changeBalance(accountNumber, newBalance);
@@ -104,9 +141,7 @@ public class CustomerService {
             String type = " Successfully withdrawn " + amount + " EUR";
             customerRepository.addToTransactionHistory(accountNumber, type);
 
-        } else {
-            return "account is locked or invalid amount";
-        }
+
         return "Withdrawn " + amount + " EUR  ";
 
     }
@@ -116,11 +151,13 @@ public class CustomerService {
 
     public String transfer(int acNumFrom, int acNumTo, int amount) {
 
-            BankCustomer customerFrom = customerRepository.getCustomer(acNumFrom);
-            BankCustomer customerTo = customerRepository.getCustomer(acNumTo);
+            BankAccounts customerFrom = customerRepository.getCustomer(acNumFrom);
+            BankAccounts customerTo = customerRepository.getCustomer(acNumTo);
 
+        if (amount <= 0 || customerFrom.isLocked() || customerTo.isLocked()) {
+            throw new ApplicationException(" amount peaks olema suurem kui 0 v6i konto on lukus");
+        }
 
-        if (amount > 0 && !customerFrom.isLocked() && !customerTo.isLocked() && amount <= customerFrom.getBalance()) {
 
             int newBalanceFrom = customerFrom.getBalance() - amount;
             int newBalanceTo = customerTo.getBalance() + amount;
@@ -137,9 +174,6 @@ public class CustomerService {
 
             return "Successfully transfered  " + amount + " to account " + acNumTo;
 
-        } else {
-            return "account is locked or invalid amount ";
-        }
     }
 
 

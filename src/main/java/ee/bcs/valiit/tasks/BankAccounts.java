@@ -1,9 +1,10 @@
 package ee.bcs.valiit.tasks;
 
-public class BankCustomer {
+public class BankAccounts {
 
+    private String name;
     private int accountNumber;
-    private String customerName;
+    private int clientId;
     boolean locked;
     private int balance;
 //
@@ -14,12 +15,21 @@ public class BankCustomer {
 //        this.balance = balance;
 //    }
 
-    public String getCustomerName() {
-        return customerName;
+
+    public String getName() {
+        return name;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
 
     public boolean isLocked() {

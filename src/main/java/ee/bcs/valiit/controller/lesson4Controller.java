@@ -1,7 +1,9 @@
 package ee.bcs.valiit.controller;
 
 import ee.bcs.valiit.Service.CustomerService;
-import ee.bcs.valiit.tasks.BankCustomer;
+import ee.bcs.valiit.tasks.BankAccounts;
+import ee.bcs.valiit.tasks.Client;
+import ee.bcs.valiit.tasks.ClientsAndAccounts;
 import ee.bcs.valiit.tasks.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,11 @@ public class lesson4Controller {
     private CustomerService customerService;
 
 
+//    @GetMapping("customers/clients")
+//    public List<>
+
+
+
     //*** KLIENDI TRANSAKTSIOONIDE AJALUGU*********************************************
 
     @GetMapping("customers/trans")
@@ -28,12 +35,29 @@ public class lesson4Controller {
 
     }
 
-    // *** TERVE KLIENDI TABEL*************************************************************
-    @GetMapping("customers/all")
-    public List<BankCustomer> getAll() {
 
-        return customerService.allCustomers();
+    //***KLIENDID KOOS ACCOUNTIDEGA**************************************************
+    @GetMapping("customers/allInfo")
+    public List<ClientsAndAccounts> getAllInfo() {
+
+        return customerService.allInfo();
     }
+
+
+    // *** K6IK KONTOD*************************************************************
+    @GetMapping("customers/allAccounts")
+    public List<BankAccounts> getAllAccounts() {
+
+        return customerService.allAccounts();
+    }
+
+    //**K6ik kliendid
+    @GetMapping("customers/allClients")
+    public List<Client> getAllClients() {
+
+        return customerService.allClients();
+    }
+
 
 
     //*******BALANCE************************************************************
@@ -43,16 +67,25 @@ public class lesson4Controller {
 
         return customerService.getBalance(accountNumber);
     }
+    //LISA KlIENT**************************************************************************************
+
+    @PostMapping("customers")
+    public String addClient(@RequestBody Client client) {
+
+
+        return customerService.createClient(client.getFirstName(),client.getLastName(),client.getAddress());
+    }
+
 
 
     //***** LISA KONTO******************************************************************************************
 
-    @PostMapping("customers")
-    public String addAccount(@RequestBody BankCustomer customer) {
+    @PostMapping("customers/account")
+    public String addAccount(@RequestBody BankAccounts customer) {
 
 
         return customerService.createAccount(customer.getAccountNumber(),
-                customer.getCustomerName(), customer.isLocked(), customer.getBalance());
+                customer.getClientId(), customer.isLocked(), customer.getBalance());
     }
 
     //****KONTO LUKUSTAMINE********************************************************************
@@ -79,7 +112,7 @@ public class lesson4Controller {
 
 
     @PutMapping("customers/addBalance")
-    public String addBalance(@RequestBody BankCustomer customer) {
+    public String addBalance(@RequestBody BankAccounts customer) {
 
         return customerService.deposit(customer.getAccountNumber(), customer.getBalance());
     }
@@ -88,7 +121,7 @@ public class lesson4Controller {
     //V6TA RAHA V2LJA***********************************************************************
 
     @PutMapping("customers/withdraw")
-    public String withdraw(@RequestBody BankCustomer customer) {
+    public String withdraw(@RequestBody BankAccounts customer) {
 
         return customerService.withdraw(customer.getAccountNumber(), customer.getBalance());
 

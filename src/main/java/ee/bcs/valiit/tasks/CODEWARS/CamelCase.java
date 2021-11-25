@@ -5,7 +5,7 @@ public class CamelCase {
 
     public static void main(String[] args) {
 
-        System.out.println(toCamelCase("The-wild-knight"));
+        System.out.println(toCamelCase("the_wild_knight"));
 
     }
 

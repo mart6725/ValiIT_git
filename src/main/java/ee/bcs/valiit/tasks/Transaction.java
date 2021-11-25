@@ -1,38 +1,32 @@
 package ee.bcs.valiit.tasks;
 
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Transaction {
 
-    private int accountNumber;
+    //private int accountNumber;
     private String transaction;
-    private Date date;
-    private Time time;
+    private LocalDateTime time;
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
-    public int getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+//    public int getAccountNumber() {
+//        return accountNumber;
+//    }
+//
+//    public void setAccountNumber(int accountNumber) {
+//        this.accountNumber = accountNumber;
+//    }
 
     public String getTransaction() {
         return transaction;
