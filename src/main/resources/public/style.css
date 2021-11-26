@@ -8,26 +8,42 @@ marquee{
     direction:left;
     marquee-speed:fast;
 }
+h3 {
+    color: aliceblue;
+    size: A3;
+}
 
 .pink {
     color: deeppink;
+    text-align: center;
     font-family: "Bauhaus 93";
     animation-name: example;
     animation-duration: 4s;
     animation-iteration-count: infinite;
 }
+
+td {
+    height: 50px;
+    text-align:center;
+
+    animation: mymove 5s infinite;
+}
+
+
 table {
     border: dashed 3px darkmagenta;
-
+    width: 800px;
 
 
 }
 body {
-    background-color: green;
+    background-color: black;
 }
 
 
-
+@keyframes mymove {
+    50% {font-size: 40px;}
+}
 
 
 

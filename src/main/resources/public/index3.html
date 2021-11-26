@@ -1,85 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<input id="a">
+<h1 class="pink">##########################################################</h1>
+<input id="x"><h3>X</h3>
+<input id="y"><h3>Y</h3>
+<input id="a"><h3>a</h3>
+<button id="multiply">multiply table</button>
 <button id="arrayButton">array</button>
 <button id="decreasing">decreasing</button>
-<table border="1">
-    <tr>
-        <td>1</td>
-    </tr>
-    <tr>
-        <td>2</td>
-    </tr>
-    <tr>
-        <td>3</td>
-    </tr>
-</table>
 
 
 
 <table id="resultTable">
-    <tr id="resultRow">
 
-    </tr>
 </table>
 <script>
     let arrayButton = document.getElementById("arrayButton");
     arrayButton.onclick = function () {
         let a = document.getElementById("a").value;
-        let resultRow = document.getElementById("resultRow")
+        let resultTable = document.getElementById("resultTable")
 
-        resultRow.innerHTML = "";
-        let data = generateArray(a);
+        resultTable.innerHTML = "";
+        let data = generateArray(Number(a));
         for (let i = 0; i < data.length; i++) {
-            //let row = document.createElement("tr")
+            let row = document.createElement("tr")
             let cell = document.createElement("td")
-            resultRow.appendChild(cell)
+            resultTable.appendChild(cell)
             cell.innerText = data[i]
-
-            //resultRow.appendChild(row);
+            resultTable.appendChild(row);
         }
     }
 
     let decreasingButton = document.getElementById("decreasing");
     decreasingButton.onclick = function () {
         let a = document.getElementById("a").value;
-        let resultRow = document.getElementById("resultRow")
-        resultRow.innerHTML = "";
-        let data = decreasingArray(a);
-        for (let i = 0; i < data.length; i++) {
-            //let row = document.createElement("tr")
-            let cell = document.createElement("td")
-            resultRow.appendChild(cell)
-            cell.innerText = data[i]
+        let resultTable = document.getElementById("resultTable")
 
-            //resultRow.appendChild(row);
+        resultTable.innerHTML = "";
+        let data = decreasingArray(Number(a));
+        for (let i = 0; i < data.length; i++) {
+            let row = document.createElement("tr")
+            let cell = document.createElement("td")
+            resultTable.appendChild(cell)
+            cell.innerText = data[i]
+            resultTable.appendChild(row);
         }
+    }
+
+    let multiplyButton = document.getElementById("multiply");
+    multiplyButton.onclick = function () {
+        let x = document.getElementById("x").value;
+        let y = document.getElementById("y").value;
+        let resultTable = document.getElementById("resultTable")
+
+        resultTable.innerHTML = "";
+
+            for (let i = 1; i <= x; i++) {
+                let row = document.createElement("tr")
+               resultTable.appendChild(row)
+
+
+                for (let j = 1; j <= y; j++) {
+                    let cell = document.createElement("td")
+                    resultTable.appendChild(cell)
+                    cell.innerText =j*i
+
+                }
+            }
+
     }
 
 
 
 
 
-
+//funktsioonid
 
 
     function generateArray(n) {
 
         let newArray = [];
-        for (let i = 0; i < n; i++) {
-            newArray[i] = i + 1;
+        for (let i = 0; i < Math.abs(n); i++) {
+            if(n>0) {
+                newArray[i] = i + 1;
+            }else{
+                newArray[i] =-1* (i + 1);
+            }
         }
         return newArray;
     }
 
     function decreasingArray(n) {
         let result = [Math.abs(n) + 1];
-        for (let i = 0; i < n; i++) {
+        for (let i = 0; i < Math.abs(n); i++) {
             if (n > 0) {
                 result[i] = n - i;
             } else {
@@ -88,6 +106,8 @@
         }
         return result;
     }
+
+
 
 </script>
 </body>
