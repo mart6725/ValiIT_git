@@ -3,7 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
+
+<br>
+<marquee>
+    <img src="vhs.jpg" width="600" height="300"/>
+</marquee>
+
+
+<h1 class="pink">VIDEOLAENUTUS</h1>
+<h2>T3R3 TUL3MAST</h2>
+<h3>FILMID</h3>
+
+<ul>
+    <li>Terminator 2</li>
+    <li>A-Team collection</li>
+    <li>Matrix</li>
+</ul>
+
+<script>
+    let fibButton = document.getElementById("1");
+    fibButton.onclick =function (){
+
+    }
+    function fibonacci(x) {
+        let previous2 = 0;
+        let previous = 1;
+        if (x === 0) {
+            return previous2;
+        } else if (x === 1) {
+            return previous;
+        }
+        for (let i = 1; i < x; i++) {
+            let tmp = previous + previous2;
+            previous2 = previous;
+            previous = tmp;
+        }
+        return previous;
+    }
+    function max(x,y){
+        if (x > y) {
+            return x;
+        } else {
+            return y
+        }
+    }
+
+
+
+</script>
+<input id="1">
+nth element
+<input>
+
+<button onclick="alert(fibonacci(document.getElementById('1').value))">fibo nth element</button>
+<button onclick="alert(max(6,2))">max of two numbers</button>
+<ol>
+    <li> numbered list</li>
+    <li> numbered list</li>
+    <li> numbered list</li>
+</ol>
+<dl>
+    <dt>description list</dt>
+    <dd>- description</dd>
+    <dt>Milk</dt>
+    <dd>- white cold drink</dd>
+</dl>
+<a href="https://www.google.com">LINK</a>
+
+<table >
+    <tr>
+        <td>rida 1 tulp 1</td>
+        <td>rida 1 tulp 2</td>
+        <td>rida 1 tulp 3</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="https://www.google.com">rida 2 tulp 1</a>
+        </td>
+        <td>rida 2 tulp 2</td>
+        <td>rida 2 tulp 3</td>
+    </tr>
+</table>
+<input type="text"><br>
+<input type="password"><br>
+valik 1<input type="radio" name="radio"><br>
+valik 2<input type="radio" name="radio"><br>
+valik 3<input type="radio" name="radio"><br>
+
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+<input type="checkbox"><br>
+
+<select>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+</select><br>
+
+
+<input type="date"><br>
+<input type="range">
+
+<button>Press ME and nothing happens</button>
+
 </body>
 </html>

@@ -143,21 +143,21 @@ public class Lesson2b {
     // Tagasta fibonacci jada n element. Võid eeldada, et n >= 0
     public static int fibonacci(int n) {
 //
-        if (n <= 1) {
-            return n;
-        }
-        return fibonacci(n - 1) + fibonacci(n - 2);         // recursioon , performance kohutav
-
-//        int previous2 = 0;
-//        int previous = 1;
-//        for (int i = 1; i < n;i++) {
-//            int temp = previous + previous2;
-//            previous2 = previous;
-//            previous = temp;
+//        if (n <= 1) {
+//            return n;
 //        }
-//
-//
-//        return previous;
+//        return fibonacci(n - 1) + fibonacci(n - 2);         // recursioon , performance kohutav
+
+        int previous2 = 0;
+        int previous = 1;
+        for (int i = 1; i < n;i++) {
+            int temp = previous + previous2;
+            previous2 = previous;
+            previous = temp;
+        }
+
+
+        return previous;
 
     }
 

@@ -88,10 +88,6 @@ public class CustomerRepository {
     }
 
 
-
-
-
-
     public List<BankAccounts> allAccounts() {
 
         String sql = "SELECT *FROM bank_accounts";

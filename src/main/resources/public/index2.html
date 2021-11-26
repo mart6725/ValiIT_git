@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Lesson</title>
+
+</head>
+<body style="">
+<input id="a">variable a (isEven,abs,fib)<br>
+<input id="b">variable b<br>
+<input id="c">variable c<br>
+<!--<button id="minButton">Min</button>
+<button id="maxButton">Max</button>
+<button id="absButton">Abs</button>
+<button id="isEvenButton">isEven</button>
+<button id="3minButton">3 Min</button>
+<button id="3maxButton">3 Max</button>
+<button id="fib">get fib Nth</button>-->
+<button id="calculate">CALCULATE!</button>
+<select id="action" >
+    <option value="1">min</option>
+    <option value="2">Max</option>
+    <option value="3">abs</option>
+    <option value="4">isEven</option>
+    <option value="5">3 min</option>
+    <option value="6">3 max</option>
+    <option value="7">fib Nth</option>
+</select><br>
+<br>
+<input id="answer" type="text" disabled>Vastus
+
+<script>
+
+    let calculateButton = document.getElementById("calculate");
+
+    calculateButton.onclick = function () {
+        let action = document.getElementById("action")
+        let a = document.getElementById("a").value;
+        let b = document.getElementById("b").value;
+        let c = document.getElementById("c").value;
+        if (action.value == 1) {
+
+            let answer = min(Number(a), Number(b));
+            document.getElementById("answer").value = answer;
+        } else if (action.value == 2) {
+
+            let answer = max(Number(a), Number(b));
+            document.getElementById("answer").value = answer;
+
+
+        } else if (action.value == 3) {
+
+            let answer = abs(Number(a));
+            document.getElementById("answer").value = answer;
+
+
+        } else if (action.value == 4) {
+
+            let answer = isEven(Number(a));
+            document.getElementById("answer").value = answer;
+
+
+        } else if (action.value == 5) {
+
+            let answer = min3(Number(a), Number(b), Number(c));
+            document.getElementById("answer").value = answer;
+
+
+        } else if (action.value == 6) {
+
+            let answer = max3(Number(a), Number(b), Number(c));
+            document.getElementById("answer").value = answer;
+
+
+        } else if (action.value == 7) {
+
+            let answer = fibonacci(Number(a));
+            document.getElementById("answer").value = answer;
+        }
+
+
+        // let maxButton = document.getElementById("maxButton");
+        // maxButton.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let answer = max(Number(a), Number(b));
+        //     document.getElementById("answer").value = answer;
+        // }
+        //
+        // let minButton = document.getElementById("minButton");
+        // minButton.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let answer = min(Number(a), Number(b));
+        //     document.getElementById("answer").value = answer;
+        // }
+        //
+        // let absButton = document.getElementById("absButton");
+        // absButton.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let answer = abs(Number(a));
+        //     document.getElementById("answer").value = answer;
+        // }
+        //
+        // let isEvenButton = document.getElementById("isEvenButton");
+        // isEvenButton.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let answer = isEven(Number(a));
+        //     document.getElementById("answer").value = answer;
+        // }
+        //
+        // let min3Button = document.getElementById("3minButton")
+        // min3Button.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let c = document.getElementById("c").value;
+        //     let answer = min3(a, b, c);
+        //     document.getElementById("answer").value = answer;
+        //
+        // }
+        // let max3Button = document.getElementById("3maxButton")
+        // max3Button.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let b = document.getElementById("b").value;
+        //     let c = document.getElementById("c").value;
+        //     let answer = max3(a, b, c);
+        //     console.log(answer)
+        //     document.getElementById("answer").value = answer;
+        //
+        // }
+        // let fibButton = document.getElementById("fib");
+        // fibButton.onclick = function () {
+        //     let a = document.getElementById("a").value;
+        //     let answer = fibonacci(Number(a));
+        //     document.getElementById("answer").value = answer;
+        // }
+
+        //Funktsioonid
+        function max(x, y) {
+            if (x > y) {
+                return x;
+            } else {
+                return y
+            }
+        }
+
+        function min(x, y) {
+            if (x < y) {
+                return x;
+            } else {
+                return y
+            }
+        }
+
+        function abs(a) {
+
+            if (a < 0) {
+                return -1 * a;
+            } else {
+                return a;
+            }
+        }
+
+        function isEven(a) {
+            if (a % 2 === 0) {
+                return true;
+
+            } else {
+                return false;
+            }
+        }
+
+        function min3(a, b, c) {
+            if (a <= b && a <= c) {
+                return a;
+            } else if (b <= a && b <= c) {
+                return b;
+            } else {
+                return c;
+            }
+
+        }
+
+        function max3(a, b, c) {
+            if (a >= c && a >= b) {
+                return a;
+            } else if (b >= a && b >= c) {
+                return b;
+            } else {
+                return c;
+            }
+        }
+
+        function fibonacci(x) {
+            let previous2 = 0;
+            let previous = 1;
+            if (x === 0) {
+                return previous2;
+            } else if (x === 1) {
+                return previous;
+            }
+            for (let i = 1; i < x; i++) {
+                let tmp = previous + previous2;
+                previous2 = previous;
+                previous = tmp;
+            }
+            return previous;
+        }
+    }
+</script>
+</body>
+</html>
