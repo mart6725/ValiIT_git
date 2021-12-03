@@ -7,9 +7,14 @@ import ee.bcs.valiit.tasks.Client;
 import ee.bcs.valiit.tasks.ClientsAndAccounts;
 import ee.bcs.valiit.tasks.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerService {
@@ -37,6 +42,20 @@ public class CustomerService {
 
         return customerRepository.allClients();
     }
+    //yks KLient**************************************************************
+
+    public Client getClient(int id) {
+
+        return customerRepository.getClient(id);
+    }
+//Kustuta klient**************************************************************
+
+    public String deleteClient(int id) {
+
+       customerRepository.deleteAccount(id);
+       customerRepository.deleteClient(id);
+        return "Edukalt kustutatud klient ja kontod";
+    }
 
 
     //KLIENDI LOOMINE********************************************************************************
@@ -46,7 +65,7 @@ public class CustomerService {
         int clientId = customerRepository.createClient(firstName,lastName,address);
 
 
-        return "Konto loodud  Account name: " + firstName + " " + lastName + " client id : " + clientId;
+        return "Konto loodud  nimele: " + firstName + " " + lastName + " client id : " + clientId + " We care !";
 
 
     }
@@ -75,6 +94,16 @@ public class CustomerService {
 
         return "Arve number: " + accountNumber + ". Saldo: " + customerRepository.getBalance(accountNumber);
     }
+//UPDATE CLIENT***************************************************
+public String updateClient(int id,String firstName,String lastName,String address) {
+
+
+    customerRepository.updateCustomer(id,firstName,lastName,address);
+    return " Uuendatud";
+}
+
+
+
 
 
     //****LOCK****************************************************************************************************
@@ -117,7 +146,7 @@ public class CustomerService {
             customerRepository.addToTransactionHistory(accountNumber, type);
 
 
-        return "Added " + amount + " EUR  ";
+        return "Kontole lisatud " + amount + " EUR  ";
 
     }
 
@@ -131,6 +160,9 @@ public class CustomerService {
         if (amount <= 0 || result.isLocked()) {
             throw new ApplicationException(" amount peaks olema suurem kui 0 v6i konto on lukus");
         }
+        if(amount> result.getBalance()){
+            return "Kontol pole piisavalt vahendeid";
+        }
 
 
             int newBalance = result.getBalance() - amount;
@@ -138,11 +170,11 @@ public class CustomerService {
 
             //**** LISAME TRANSACTIONITE TABELISSE
 
-            String type = " Successfully withdrawn " + amount + " EUR";
+            String type = " Kontolt eemaldatud " + amount + " EUR";
             customerRepository.addToTransactionHistory(accountNumber, type);
 
 
-        return "Withdrawn " + amount + " EUR  ";
+        return amount + " EUR vähem kontol ";
 
     }
 

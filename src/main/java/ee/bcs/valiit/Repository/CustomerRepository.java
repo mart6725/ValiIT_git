@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,7 +69,8 @@ public class CustomerRepository {
         @Override
         public ClientsAndAccounts mapRow(ResultSet resultSet, int i) throws SQLException {
             ClientsAndAccounts result = new ClientsAndAccounts();                                   // teeme uue objekti kuhu me andmed paneme
-            result.setAccountNumber(resultSet.getInt("account_number"));  // kysime iga rea tulbad
+            result.setAccountNumber(resultSet.getInt("account_number"));// kysime iga rea tulbad
+            result.setLocked(resultSet.getBoolean("locked"));
             result.setBalance(resultSet.getInt("balance"));
             result.setFirstName(resultSet.getString("first_name"));
             result.setLastName(resultSet.getString("last_name"));
@@ -82,6 +85,7 @@ public class CustomerRepository {
 
         String sql = "SELECT *FROM client";
         Map<String, Object> paramMap = new HashMap<>();
+
         List<Client> result = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<>(Client.class));
         return result;
 
@@ -124,6 +128,42 @@ public class CustomerRepository {
         paramMap1.put("accountNumber", accountNumber);
         BankAccounts result = jdbcTemplate.queryForObject(sql, paramMap1, new BeanPropertyRowMapper<>(BankAccounts.class));
         return result;
+    }
+    //yks KLient**************************************************************
+
+    public Client getClient(int id) {
+        String sql="SELECT*FROM client WHERE id=:id ";
+        Map<String,Object> paramMap=new HashMap<>();
+        paramMap.put("id",id);
+        return jdbcTemplate.queryForObject(sql, paramMap, new BeanPropertyRowMapper<>(Client.class));
+    }
+//KUSTUTA KLIENDI KONTOD****************************
+public void deleteAccount(int id) {
+    String sql="DELETE FROM bank_accounts WHERE client_id=:id";
+    Map<String,Object> paramMap=new HashMap<>();
+    paramMap.put("id",id);
+    jdbcTemplate.update(sql, paramMap);
+}
+    //KUSTUTA KLIENT****************************
+    public void deleteClient(int id) {
+        String sql="DELETE FROM client WHERE id=:id";
+        Map<String,Object> paramMap=new HashMap<>();
+        paramMap.put("id",id);
+        jdbcTemplate.update(sql, paramMap);
+    }
+
+
+
+
+    public void updateCustomer(int id,String firstName,String lastName,String address){
+        String sql = "UPDATE client SET first_name=:firstName,last_name=:lastName,address=:address WHERE id= :id";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        paramMap.put("firstName", firstName);
+        paramMap.put("lastName", lastName);
+        paramMap.put("address", address);
+        jdbcTemplate.update(sql, paramMap);
+
     }
 
 

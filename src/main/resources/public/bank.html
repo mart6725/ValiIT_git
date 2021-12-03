@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styleBank.css">
+    <meta charset="UTF-8">
+    <title>Welcome to E-Corp</title>
+</head>
+<body>
+<img src="ecorp.png">
+
+<h1>Loo Kasutaja</h1>
+
+<input id="firstName" placeholder="Eesnimi"><br>
+<input id="lastName" placeholder="Perenimi"><br>
+<input id="address" placeholder="aadress"><br>
+<button id="client">lisa</button>
+<span id="answer"></span><br>
+<!--<input id="a">accountNumber<br>-->
+<!--<button id="button">konto balanss</button>-->
+<h1>Loo Konto</h1>
+<input id="id" placeholder="Sinu Id"><br>
+<input id="balance" placeholder="esialgne summa"><br>
+<button id="account">lisa</button>
+<span id="answerAccount"></span><br>
+<h1>Konto balanss</h1>
+<input id="a" placeholder="konto number"><br>
+<button id="button">Kuva</button>
+<span id="answerBalance"></span><br>
+
+<h1>Lisa või eemalda vahendeid</h1>
+<input id="accNum" placeholder="konto number"><br>
+<input id="amount" placeholder="summa"><br>
+<button id="withdrawBalance">eemalda</button>
+<span id="answerWithdrawBalance"></span><br>
+<button id="addBalance">Lisa juurde</button>
+<span id="answerAddBalance"></span><br>
+
+<h1>Teosta ülekanne</h1>
+<input id="accNumFrom" placeholder="Kandja kontonumber"><br>
+<input id="accNumTo" placeholder="Saaja kontonumber"><br>
+<input id="amount1" placeholder="summa"><br>
+<button id="transfer">Soorita tehing</button>
+<span id="answerTransfer"></span><br>
+
+<h1>Lukusta</h1>
+<input id="accNumber" placeholder="Kontonumber"><br>
+<button id="lock">Lukku!</button>
+<button id="unlock">Lukust lahti!</button>
+<span id="answerLock"></span><br>
+
+<h1>Kontode info</h1>
+<button id="allInfo">Kuva kontod ja kliendid</button>
+<table id="infoTable">
+
+
+</table>
+<script>
+
+    //GET BALANCE*****************************************************
+    let Button = document.getElementById("button");
+    Button.onclick = function () {
+        let a = document.getElementById("a");
+        let url = '/customers/getBalance/' + a.value
+        fetch(url)
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerBalance")
+                answer.innerText = result;
+            })
+
+    }
+    //LOO KLIENT
+    let clientButton = document.getElementById("client");
+    clientButton.onclick = function () {
+        let firstName = document.getElementById("firstName");
+        let lastName = document.getElementById("lastName");
+        let address = document.getElementById("address");
+        let url = '/customers/'
+        let body = {
+            firstName: firstName.value,
+            lastName: lastName.value,
+            address: address.value
+        }
+        let options = {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        }
+        fetch(url, options)                      //options
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answer")
+                answer.innerText = result;
+            })
+
+    }
+    //LOO KONTO
+    let accountButton = document.getElementById("account");
+    accountButton.onclick = function () {
+        let id = document.getElementById("id");
+        let balance = document.getElementById("balance");
+
+        let url = '/customers/account/'
+        let body = {
+            accountNumber: Math.floor(Math.random() * 1000),
+            clientId: id.value,
+            locked: false,
+            balance: balance.value
+        }
+        let options = {                    // siis kui request body
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        }
+        fetch(url, options)                      //options on vabatahtlik , anname kaasa
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerAccount")
+                answer.innerText = result;
+            })
+
+    }
+    //eemalda raha
+    let withdrawButton = document.getElementById("withdrawBalance");
+    withdrawButton.onclick = function () {
+        let accNum = document.getElementById("accNum");
+        let amount = document.getElementById("amount");
+
+        let url = '/customers/withdraw/'
+        let body = {
+            accountNumber: accNum.value,
+            balance: amount.value
+        }
+        let options = {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        }
+        fetch(url, options)
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerWithdrawBalance")
+                answer.innerText = result;
+            })
+
+    }
+    //lisa raha
+    let addBalanceButton = document.getElementById("addBalance");
+    addBalanceButton.onclick = function () {
+        let accNum = document.getElementById("accNum");
+        let amount = document.getElementById("amount");
+
+        let url = '/customers/addBalance/'
+        let body = {
+            accountNumber: accNum.value,
+            balance: amount.value
+        }
+        let options = {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        }
+        fetch(url, options)
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerAddBalance")
+                answer.innerText = result;
+            })
+
+    }
+    //TRANSFER************************
+    let transferButton = document.getElementById("transfer");
+    transferButton.onclick = function () {
+        let accNumFrom = document.getElementById("accNumFrom");
+        let accNumTo = document.getElementById("accNumTo");
+        let amount = document.getElementById("amount1")
+        let url = '/customers/transfer?acNumFrom=' + accNumFrom.value + '&acNumTo=' + accNumTo.value + '&amount=' + amount.value
+        let options = {
+            method: 'PUT'
+        }
+        fetch(url, options)
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerTransfer")
+                answer.innerText = result;
+            })
+
+    }
+    //LOCK********************************************
+    let lockButton = document.getElementById("lock")
+    lockButton.onclick = function () {
+        let accountNumber = document.getElementById("accNumber")
+        let url = '/customers/lock?acNum=' + accountNumber.value
+        let options = {
+            method: 'PUT'
+        }
+        fetch(url, options)
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerLock")
+                answer.innerText = result
+            })
+
+    }
+    //**UNLOCK*****************************
+    let unlockButton = document.getElementById("unlock")
+    unlockButton.onclick = function () {
+        let accountNumber = document.getElementById("accNumber")
+        let url = '/customers/unlock?acNum=' + accountNumber.value
+        let options = {
+            method: 'PUT'
+        }
+        fetch(url, options)
+            .then(result => result.text())
+            .then(function (result) {
+                let answer = document.getElementById("answerLock")
+                answer.innerText = result
+            })
+
+    }
+    //GET CLIENTS AND ACCOUNTS INFO**************************************
+    let allInfoButton = document.getElementById("allInfo")
+    allInfoButton.onclick = function () {
+
+        let url = '/customers/allInfo'
+        let table = document.getElementById("infoTable")
+
+        table.innerHTML = "";
+
+        fetch(url)
+            .then(result => result.json())
+            .then(function (result) {
+                for (let i = 0; i < result.length; i++) {
+
+                    if (i === 0) {
+                        let rowHeader = document.createElement("tr")
+                        table.append(rowHeader)
+                        let cellAcc = document.createElement("td")
+                        rowHeader.append(cellAcc)
+                        cellAcc.innerText = "Kontonumber"
+                        let cellBalance = document.createElement("td")
+                        rowHeader.append(cellBalance)
+                        cellBalance.innerText = "Vahendid(EUR)"
+                        let cellFname = document.createElement("td")
+                        rowHeader.append(cellFname)
+                        cellFname.innerText = "Eesnimi"
+                        let cellLname = document.createElement("td")
+                        rowHeader.append(cellLname)
+                        cellLname.innerText = "Perenimi"
+                        let cellAddress = document.createElement("td")
+                        rowHeader.append(cellAddress)
+                        cellAddress.innerText = "Aadress"
+                    }
+                    let row = document.createElement("tr")
+                    table.append(row)
+
+                    let cell = document.createElement("td")
+                    row.append(cell)
+                    cell.innerText = result[i].accountNumber
+                    let cell2 = document.createElement("td")
+                    row.append(cell2)
+                    cell2.innerText = result[i].balance
+                    let cell3 = document.createElement("td")
+                    row.append(cell3)
+                    cell3.innerText = result[i].firstName
+                    let cell4 = document.createElement("td")
+                    row.append(cell4)
+                    cell4.innerText = result[i].lastName
+                    let cell5 = document.createElement("td")
+                    row.append(cell5)
+                    cell5.innerText = result[i].address
+                }
+            })
+
+    }
+
+
+</script>
+</body>
+</html>

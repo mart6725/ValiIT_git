@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class dtoTestController {
 
-    @GetMapping("testDto/test")
+    @GetMapping("/api/testDto/test")
     public DtoTest testDto() {
 
         DtoTest dtoTest = new DtoTest();

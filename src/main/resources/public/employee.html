@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+<h1>Lisa töötaja</h1>
+<input id="firstName" placeholder="Eesnimi"><br>
+<input id="lastName" placeholder="Perenimi"><br>
+<input id="position" placeholder="positsioon"><br>
+<input id="address" placeholder="aadress"><br>
+<button id="addEmployee">Lisa</button>
+<span id="addAnswer"></span>
+
+<h1>Otsi töötajat id järgi</h1>
+<input id="id" placeholder="id"><br>
+<button id="getEmployee">Kuva info</button>
+<span id="fName"></span>
+<span id="lName"></span>
+<span id="position1"></span>
+<span id="address1"></span>
+
+<h1>Uuenda töötaja andmeid</h1>
+<input id="idUpdate" placeholder="id"><br>
+<input id="firstN" placeholder="Eesnimi"><br>
+<input id="lastN" placeholder="Perenimi"><br>
+<input id="posit" placeholder="positsioon"><br>
+<input id="adre" placeholder="aadress"><br>
+<button id="updateEmployee">Uuenda</button>
+<span id="updateAnswer"></span>
+
+<script>
+    let employeeButton = document.getElementById("addEmployee")
+    employeeButton.onclick=function (){
+        let firstName = document.getElementById("firstName")
+        let lastName = document.getElementById("lastName")
+        let position = document.getElementById("position")
+        let address = document.getElementById("address")
+
+        let url='employee'
+        let body={
+            firstName:firstName.value,
+            lastName:lastName.value,
+            position:position.value,
+            address:address.value
+        }
+        let options={
+            method:'Post',
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        }
+        fetch(url,options)
+        .then(result =>result.text())
+        .then(function (result){
+            let answer = document.getElementById("addAnswer")
+            answer.innerText=result;
+        })
+
+    }
+let idButton = document.getElementById("getEmployee")
+    idButton.onclick=function (){
+        let id = document.getElementById("id")
+        let url = 'employee/getEmployee/'+id.value
+        fetch(url)
+        .then(result=>result.text())
+        .then(function (result){
+            let fName=document.getElementById("fName")
+            fName.innerText=result
+
+        })
+
+    }
+    let updateButton = document.getElementById("updateEmployee")
+    updateButton.onclick=function (){
+        let id = document.getElementById("idUpdate")
+        let firstName = document.getElementById("firstN")
+        let lastName = document.getElementById("lastN")
+        let position = document.getElementById("posit")
+        let address = document.getElementById("adre")
+
+        let url='employee/update/' + id.value
+        let body={
+            firstName:firstName.value,
+            lastName:lastName.value,
+            position:position.value,
+            address:address.value
+        }
+        let options={
+            method:'PUT',
+            body: JSON.stringify(body),
+            headers: {"Content-Type": "application/json"}
+        }
+        fetch(url,options)
+            .then(result =>result.text())
+            .then(function (result){
+                let answer = document.getElementById("updateAnswer")
+                answer.innerText=result;
+            })
+
+    }
+
+
+</script>
+</body>
+
+
+</html>
