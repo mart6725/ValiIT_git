@@ -38,9 +38,9 @@ public class CustomerService {
     }
     //**K6IK KLIENDID**********************************************************************
 
-    public List<Client> allClients() {
+    public List<Client> allClients(String search,String orderBy) {
 
-        return customerRepository.allClients();
+        return customerRepository.allClients(search,orderBy);
     }
     //yks KLient**************************************************************
 
@@ -60,12 +60,12 @@ public class CustomerService {
 
     //KLIENDI LOOMINE********************************************************************************
 
-    public String createClient(String firstName,String lastName,String address) {
+    public int createClient(String firstName,String lastName,String address) {
 
         int clientId = customerRepository.createClient(firstName,lastName,address);
 
 
-        return "Konto loodud  nimele: " + firstName + " " + lastName + " client id : " + clientId + " We care !";
+        return clientId;
 
 
     }

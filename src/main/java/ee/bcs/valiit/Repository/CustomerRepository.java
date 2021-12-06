@@ -81,10 +81,18 @@ public class CustomerRepository {
     }
 
 
-    public List<Client> allClients() {
+    public List<Client> allClients(String search,String orderBy) {
 
-        String sql = "SELECT *FROM client";
+        String sql = "SELECT *FROM client ";
         Map<String, Object> paramMap = new HashMap<>();
+        if(search != null && !search.isBlank()){
+            sql+="WHERE first_name ILIKE :search OR last_name ILIKE :search";
+            paramMap.put("search",search+"%");
+        }
+        if(orderBy != null && !orderBy.isBlank()){
+            sql+=" ORDER BY " + orderBy;
+            paramMap.put("search",search+"%");
+        }
 
         List<Client> result = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<>(Client.class));
         return result;

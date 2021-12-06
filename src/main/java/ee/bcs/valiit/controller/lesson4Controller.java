@@ -55,9 +55,9 @@ public class lesson4Controller {
 
     //**K6ik kliendid
     @GetMapping("/api/customers/allClients")
-    public List<Client> getAllClients() {
+    public List<Client> getAllClients(String search,String orderBy) {
 
-        return customerService.allClients();
+        return customerService.allClients(search, orderBy);
     }
 
     //yks KLient**************************************************************
@@ -84,7 +84,7 @@ public class lesson4Controller {
     //LISA KlIENT**************************************************************************************
 
     @PostMapping("/api/customers")
-    public String addClient(@RequestBody Client client) {
+    public int addClient(@RequestBody Client client) {
 
 
         return customerService.createClient(client.getFirstName(), client.getLastName(), client.getAddress());
